@@ -1,0 +1,1057 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>HP ConvertX </title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- MAIN STYLES -->
+  <style>
+    :root {
+      --bg: #020617;
+      --accent: #6366f1;
+      --accent2: #22c55e;
+      --accent3: #a855f7;
+      --text: #e5e7eb;
+      --muted: #9ca3af;
+      --card: rgba(15, 23, 42, 0.98);
+      --border: rgba(148, 163, 184, 0.5);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        sans-serif;
+      background:
+        radial-gradient(circle at 0 0, rgba(56, 189, 248, 0.15), transparent 55%),
+        radial-gradient(circle at 100% 100%, rgba(129, 140, 248, 0.22), transparent 60%),
+        radial-gradient(circle at 50% 0, rgba(52, 211, 153, 0.16), transparent 50%),
+        linear-gradient(135deg, #020617, #020617 40%, #020617 100%);
+      color: var(--text);
+      display: flex;
+      justify-content: center;
+      align-items: stretch;
+    }
+
+    .page {
+      width: 100%;
+      max-width: 1200px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-mark {
+      width: 36px;
+      height: 36px;
+      border-radius: 14px;
+      background: conic-gradient(from 220deg, #6366f1, #22c55e, #a855f7, #6366f1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 16px;
+      color: #020617;
+      box-shadow: 0 12px 26px rgba(15, 23, 42, 0.9);
+    }
+
+    .logo-title {
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      font-size: 17px;
+    }
+
+    .logo-sub {
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .pill {
+      font-size: 11px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(15, 23, 42, 0.94);
+      color: var(--muted);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .pill-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: #22c55e;
+      box-shadow: 0 0 8px rgba(34, 197, 94, 0.9);
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+      gap: 24px;
+      align-items: flex-start;
+      margin-top: 10px;
+    }
+
+    @media (max-width: 900px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 10px;
+      font-size: 11px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.94);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      margin-bottom: 12px;
+    }
+
+    .badge span {
+      padding: 2px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(129, 140, 248, 0.8);
+      background: rgba(129, 140, 248, 0.16);
+      color: #c7d2fe;
+      font-size: 10px;
+    }
+
+    h1 {
+      font-size: clamp(32px, 4vw, 44px);
+      line-height: 1.08;
+      margin-bottom: 10px;
+    }
+
+    h1 .highlight {
+      background: linear-gradient(to right, #a855f7, #6366f1, #22c55e);
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .subtitle {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.7;
+      max-width: 520px;
+      margin-bottom: 18px;
+    }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      font-size: 11px;
+      margin-top: 10px;
+    }
+
+    .chip {
+      padding: 4px 9px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      background: rgba(15, 23, 42, 0.96);
+      color: var(--muted);
+    }
+
+    .mini-grid {
+      margin-top: 16px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 10px;
+      font-size: 12px;
+    }
+
+    .mini-card {
+      border-radius: 16px;
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      background: rgba(15, 23, 42, 0.9);
+      padding: 10px 12px;
+    }
+
+    .mini-title {
+      font-weight: 600;
+      font-size: 13px;
+      margin-bottom: 3px;
+    }
+
+    .mini-sub {
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    /* Converter card */
+    .card {
+      position: relative;
+      background: var(--card);
+      border-radius: 24px;
+      padding: 18px 18px 16px;
+      border: 1px solid rgba(148, 163, 184, 0.55);
+      box-shadow: 0 24px 50px rgba(15, 23, 42, 0.98);
+      overflow: hidden;
+      backdrop-filter: blur(18px);
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: -120px;
+      background:
+        radial-gradient(circle at 0% 0%, rgba(56, 189, 248, 0.25), transparent 55%),
+        radial-gradient(circle at 100% 0%, rgba(129, 140, 248, 0.3), transparent 55%);
+      opacity: 0.9;
+      pointer-events: none;
+    }
+
+    .card-inner {
+      position: relative;
+      z-index: 1;
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 8px;
+      margin-bottom: 12px;
+      font-size: 13px;
+    }
+
+    .card-title {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .card-title-main {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 600;
+    }
+
+    .card-title-main span.icon {
+      font-size: 18px;
+    }
+
+    .card-badge {
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: rgba(22, 163, 74, 0.18);
+      color: #bbf7d0;
+      border: 1px solid rgba(22, 163, 74, 0.7);
+    }
+
+    .card-sub {
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .card-label {
+      padding: 3px 8px;
+      border-radius: 999px;
+      border: 1px dashed var(--border);
+      font-size: 11px;
+      color: var(--muted);
+      background: rgba(15, 23, 42, 0.98);
+    }
+
+    .flash {
+      font-size: 12px;
+      margin-bottom: 8px;
+      padding: 8px 10px;
+      border-radius: 10px;
+      border: 1px solid rgba(248, 113, 113, 0.8);
+      background: rgba(127, 29, 29, 0.96);
+      color: #fee2e2;
+      display: none;
+    }
+
+    form {
+      font-size: 13px;
+    }
+
+    .field {
+      margin-bottom: 12px;
+    }
+
+    .field label {
+      display: block;
+      font-size: 12px;
+      margin-bottom: 4px;
+      color: #f9fafb;
+    }
+
+    .file-input-wrapper {
+      cursor: pointer;
+      border-radius: 16px;
+      padding: 11px;
+      border: 1px dashed var(--border);
+      background: rgba(15, 23, 42, 0.98);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: all 0.15s ease;
+    }
+
+    .file-input-wrapper:hover {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 1px rgba(99, 102, 241, 0.5);
+      transform: translateY(-1px);
+    }
+
+    .file-input-wrapper.drag-over {
+      border-color: var(--accent2);
+      box-shadow: 0 0 0 1px rgba(34, 197, 94, 0.7);
+      background: rgba(15, 23, 42, 1);
+    }
+
+    .file-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 12px;
+      background: rgba(30, 64, 175, 0.9);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+    }
+
+    .file-text-main {
+      font-size: 12px;
+      font-weight: 500;
+    }
+
+    .file-text-sub {
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    input[type="file"] {
+      display: none;
+    }
+
+    #fileName {
+      margin-top: 4px;
+      font-size: 11px;
+      color: #22c55e;
+      word-wrap: break-word;
+    }
+
+    select {
+      width: 100%;
+      padding: 8px 10px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: rgba(15, 23, 42, 0.98);
+      color: #e5e7eb;
+      font-size: 13px;
+      outline: none;
+      appearance: none;
+    }
+
+    select:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 1px rgba(99, 102, 241, 0.7);
+    }
+
+    .convert-btn {
+      margin-top: 7px;
+      width: 100%;
+      border-radius: 999px;
+      border: none;
+      padding: 9px 0;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      background: linear-gradient(135deg, #6366f1, #22c55e);
+      color: #f9fafb;
+      box-shadow: 0 14px 30px rgba(79, 70, 229, 0.95);
+      transition: all 0.12s ease;
+    }
+
+    .convert-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 18px 38px rgba(79, 70, 229, 1);
+    }
+
+    .convert-btn:active {
+      transform: translateY(0);
+      box-shadow: 0 10px 24px rgba(79, 70, 229, 0.85);
+    }
+
+    .result-section {
+      margin-top: 12px;
+      border-radius: 16px;
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      background: rgba(15, 23, 42, 0.98);
+      padding: 10px 11px;
+      font-size: 12px;
+    }
+
+    .result-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 6px;
+    }
+
+    .result-title {
+      font-weight: 600;
+      font-size: 12px;
+    }
+
+    .download-btn {
+      font-size: 11px;
+      padding: 5px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      background: rgba(15, 23, 42, 1);
+      color: #e5e7eb;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .download-btn[disabled] {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    #resultPreview {
+      max-height: 220px;
+      overflow: auto;
+      border-radius: 10px;
+      padding: 6px;
+      background: #020617;
+      white-space: pre-wrap;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+        "Liberation Mono", "Courier New", monospace;
+      font-size: 12px;
+    }
+
+    #resultImage {
+      max-width: 100%;
+      border-radius: 12px;
+      display: none;
+    }
+
+    footer {
+      margin-top: 8px;
+      font-size: 11px;
+      color: var(--muted);
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <div class="logo">
+        <div class="logo-mark">HP</div>
+        <div>
+          <div class="logo-title">ConvertX </div>
+          <div class="logo-sub">Browser-only file converter</div>
+        </div>
+      </div>
+      <div class="pill">
+        <span class="pill-dot"></span>
+        Runs 100% in your browser
+      </div>
+    </header>
+
+    <main class="layout">
+      <!-- LEFT: HERO TEXT -->
+      <section>
+        <div class="badge">
+          Client-side tool
+          <span>PDF • DOCX • JSON • CSV • JPG • XLSX</span>
+        </div>
+
+        <h1>
+          Convert & preview files
+          <span class="highlight">directly in the browser.</span>
+        </h1>
+
+        <p class="subtitle">
+          Upload one or many files and ConvertX will transform them instantly on
+          your device — JSON ⇆ CSV, images, Excel, DOCX and PDF to text or PDF.
+          Nothing is uploaded to a server.
+        </p>
+
+        <div class="chips">
+          <div class="chip">JSON ⇄ CSV</div>
+          <div class="chip">XLSX → CSV</div>
+          <div class="chip">DOCX → TXT / PDF</div>
+          <div class="chip">PDF → TXT / DOCX</div>
+          <div class="chip">JPG ⇄ PNG</div>
+          <div class="chip">Image → PDF</div>
+          <div class="chip">Multi-file batch mode</div>
+        </div>
+
+        <div class="mini-grid">
+          <div class="mini-card">
+            <div class="mini-title">Batch convert</div>
+            <div class="mini-sub">Drop 10 DOCX files and turn them into PDFs with one click.</div>
+          </div>
+          <div class="mini-card">
+            <div class="mini-title">Privacy first</div>
+            <div class="mini-sub">Files never leave your browser — safe for notes and sample data.</div>
+          </div>
+          <div class="mini-card">
+            <div class="mini-title">Instant preview</div>
+            <div class="mini-sub">Preview the first converted file before downloading.</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- RIGHT: CONVERTER -->
+      <section class="card">
+        <div class="card-inner">
+          <div class="card-header">
+            <div class="card-title">
+              <div class="card-title-main">
+                <span class="icon">⚡</span>
+                <span>Smart client-side converter</span>
+                <span class="card-badge">Batch mode</span>
+              </div>
+              <div class="card-sub">
+                Select one or multiple files, choose what you want, preview & download.
+              </div>
+            </div>
+            <div class="card-label">Works offline after first load</div>
+          </div>
+
+          <div id="flash" class="flash"></div>
+
+          <form id="converterForm">
+            <div class="field">
+              <label>1. Choose one or more files</label>
+              <label class="file-input-wrapper" id="dropZone">
+                <div class="file-icon">📂</div>
+                <div>
+                  <div class="file-text-main">Click or drag & drop files here</div>
+                  <div class="file-text-sub">
+                    Supported: .json, .csv, .jpg, .jpeg, .png, .docx, .xlsx, .pdf
+                  </div>
+                </div>
+                <input type="file" id="fileInput" multiple required />
+              </label>
+              <div id="fileName"></div>
+            </div>
+
+            <div class="field">
+              <label>2. Choose conversion type (applies to all selected files)</label>
+              <select id="convertType" required>
+                <optgroup label="Data">
+                  <option value="json_to_csv">JSON → CSV</option>
+                  <option value="csv_to_json">CSV → JSON</option>
+                  <option value="xlsx_to_csv">Excel (.xlsx) → CSV</option>
+                </optgroup>
+                <optgroup label="Documents">
+                  <option value="docx_to_txt">DOCX → TXT</option>
+                  <option value="docx_to_pdf">DOCX → PDF (text only)</option>
+                  <option value="pdf_to_txt">PDF → TXT</option>
+                  <option value="pdf_to_docx">PDF → DOCX (text only)</option>
+                </optgroup>
+                <optgroup label="Images">
+                  <option value="jpg_to_png">JPG → PNG</option>
+                  <option value="png_to_jpg">PNG → JPG</option>
+                  <option value="img_to_pdf">Image (JPG/PNG) → PDF</option>
+                </optgroup>
+              </select>
+            </div>
+
+            <button type="submit" class="convert-btn">Convert selected files</button>
+          </form>
+
+          <div class="result-section">
+            <div class="result-header">
+              <div class="result-title">Converted output (preview of first file)</div>
+              <a id="downloadBtn" class="download-btn" href="#" download="" disabled>Download</a>
+            </div>
+            <img id="resultImage" alt="Converted image preview" />
+            <pre id="resultPreview">(Result will appear here once you convert.)</pre>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      Designed by HP • Frontend-only demo. Complex layout/formatting may not convert exactly.
+    </footer>
+  </div>
+
+  <!-- JS LIBRARIES (from CDNs) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.4.21/mammoth.browser.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/docx/8.3.2/docx.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+
+  <script>
+    const fileInput = document.getElementById("fileInput");
+    const dropZone = document.getElementById("dropZone");
+    const fileNameDisplay = document.getElementById("fileName");
+    const convertForm = document.getElementById("converterForm");
+    const convertTypeSelect = document.getElementById("convertType");
+    const flashBox = document.getElementById("flash");
+    const resultPreview = document.getElementById("resultPreview");
+    const resultImage = document.getElementById("resultImage");
+    const downloadBtn = document.getElementById("downloadBtn");
+
+    let lastBlobUrl = null;
+
+    const { jsPDF } = window.jspdf || {};
+    const { Document, Packer, Paragraph } = window.docx || {};
+
+    function showFlash(msg) {
+      flashBox.textContent = msg;
+      flashBox.style.display = "block";
+    }
+
+    function clearFlash() {
+      flashBox.textContent = "";
+      flashBox.style.display = "none";
+    }
+
+    function setFileName() {
+      const files = Array.from(fileInput.files || []);
+      if (!files.length) {
+        fileNameDisplay.textContent = "";
+        return;
+      }
+      if (files.length === 1) {
+        fileNameDisplay.textContent = "Selected: " + files[0].name;
+      } else {
+        const names = files.slice(0, 3).map(f => f.name).join(", ");
+        const extra = files.length > 3 ? ` + ${files.length - 3} more` : "";
+        fileNameDisplay.textContent = `Selected ${files.length} files: ${names}${extra}`;
+      }
+    }
+
+    fileInput.addEventListener("change", setFileName);
+
+    // Drag & drop
+    ["dragenter", "dragover"].forEach(evt => {
+      dropZone.addEventListener(evt, e => {
+        e.preventDefault();
+        e.stopPropagation();
+        dropZone.classList.add("drag-over");
+      });
+    });
+
+    ["dragleave", "drop"].forEach(evt => {
+      dropZone.addEventListener(evt, e => {
+        e.preventDefault();
+        e.stopPropagation();
+        dropZone.classList.remove("drag-over");
+      });
+    });
+
+    dropZone.addEventListener("drop", e => {
+      const files = e.dataTransfer.files;
+      if (files && files.length) {
+        const dt = new DataTransfer();
+        Array.from(files).forEach(f => dt.items.add(f));
+        fileInput.files = dt.files;
+        setFileName();
+      }
+    });
+
+    function resetResult() {
+      clearFlash();
+      resultPreview.style.display = "block";
+      resultPreview.textContent = "(Converting...)";
+      resultImage.style.display = "none";
+      if (lastBlobUrl) {
+        URL.revokeObjectURL(lastBlobUrl);
+        lastBlobUrl = null;
+      }
+      downloadBtn.setAttribute("disabled", "disabled");
+      downloadBtn.removeAttribute("href");
+      downloadBtn.setAttribute("download", "");
+    }
+
+    function setDownload(blob, filename) {
+      const url = URL.createObjectURL(blob);
+      lastBlobUrl = url;
+      downloadBtn.removeAttribute("disabled");
+      downloadBtn.href = url;
+      downloadBtn.download = filename;
+    }
+
+    // Helper: JSON -> CSV
+    function jsonToCsv(jsonStr) {
+      const data = JSON.parse(jsonStr);
+      if (!Array.isArray(data) || data.length === 0) {
+        throw new Error("JSON must be a non-empty array of objects.");
+      }
+      const headers = Array.from(new Set(data.flatMap(obj => Object.keys(obj))));
+      const escapeCell = value => {
+        const str = value === null || value === undefined ? "" : String(value);
+        if (/[\",\n]/.test(str)) {
+          return '"' + str.replace(/"/g, '""') + '"';
+        }
+        return str;
+      };
+      const rows = [];
+      rows.push(headers.join(","));
+      for (const row of data) {
+        rows.push(headers.map(h => escapeCell(row[h])).join(","));
+      }
+      return rows.join("\n");
+    }
+
+    // Helper: CSV -> JSON (simple)
+    function csvToJson(csvStr) {
+      const lines = csvStr.split(/\r?\n/).filter(Boolean);
+      if (lines.length < 2) throw new Error("CSV must have header + data rows.");
+      const headers = lines[0].split(",");
+      const rows = lines.slice(1).map(line => {
+        const cols = line.split(",");
+        const obj = {};
+        headers.forEach((h, i) => (obj[h.trim()] = (cols[i] || "").trim()));
+        return obj;
+      });
+      return JSON.stringify(rows, null, 2);
+    }
+
+    // Image conversion using canvas
+    function convertImage(file, targetType) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = e => {
+          const img = new Image();
+          img.onload = () => {
+            const canvas = document.createElement("canvas");
+            canvas.width = img.width;
+            canvas.height = img.height;
+            const ctx = canvas.getContext("2d");
+            ctx.drawImage(img, 0, 0);
+            const mime = targetType === "png" ? "image/png" : "image/jpeg";
+            canvas.toBlob(
+              blob => {
+                if (!blob) return reject(new Error("Canvas export failed."));
+                resolve(blob);
+              },
+              mime,
+              0.92
+            );
+          };
+          img.onerror = () => reject(new Error("Could not load image."));
+          img.src = e.target.result;
+        };
+        reader.onerror = () => reject(new Error("Could not read image file."));
+        reader.readAsDataURL(file);
+      });
+    }
+
+    // DOCX -> text using Mammoth
+    function convertDocxToText(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = e => {
+          const arrayBuffer = e.target.result;
+          window.mammoth
+            .extractRawText({ arrayBuffer })
+            .then(result => {
+              resolve(result.value || "");
+            })
+            .catch(err => reject(err));
+        };
+        reader.onerror = () => reject(new Error("Could not read DOCX file."));
+        reader.readAsArrayBuffer(file);
+      });
+    }
+
+    // XLSX -> CSV using SheetJS
+    function convertXlsxToCsv(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = e => {
+          let data = new Uint8Array(e.target.result);
+          let workbook = XLSX.read(data, { type: "array" });
+          const firstSheetName = workbook.SheetNames[0];
+          const sheet = workbook.Sheets[firstSheetName];
+          const csv = XLSX.utils.sheet_to_csv(sheet);
+          resolve(csv);
+        };
+        reader.onerror = () => reject(new Error("Could not read XLSX file."));
+        reader.readAsArrayBuffer(file);
+      });
+    }
+
+    // PDF -> text using pdf.js (basic)
+    function convertPdfToText(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = e => {
+          const typedArray = new Uint8Array(e.target.result);
+          const loadingTask = pdfjsLib.getDocument({ data: typedArray });
+          loadingTask.promise
+            .then(async pdf => {
+              let textContent = "";
+              const maxPages = Math.min(pdf.numPages, 20); // safety limit
+              for (let pageNum = 1; pageNum <= maxPages; pageNum++) {
+                const page = await pdf.getPage(pageNum);
+                const content = await page.getTextContent();
+                const strings = content.items.map(item => item.str);
+                textContent += strings.join(" ") + "\n\n";
+              }
+              resolve(textContent.trim() || "No text extracted (PDF may be scanned images).");
+            })
+            .catch(err => reject(err));
+        };
+        reader.onerror = () => reject(new Error("Could not read PDF file."));
+        reader.readAsArrayBuffer(file);
+      });
+    }
+
+    // Text -> PDF (simple) using jsPDF
+    function createPdfFromText(text) {
+      if (!jsPDF) throw new Error("jsPDF library not loaded.");
+      const doc = new jsPDF({ unit: "pt", format: "a4" });
+      const pageWidth = doc.internal.pageSize.getWidth();
+      const pageHeight = doc.internal.pageSize.getHeight();
+      const margin = 40;
+      const maxWidth = pageWidth - margin * 2;
+      const lineHeight = 14;
+
+      const lines = doc.splitTextToSize(text || "", maxWidth);
+      let y = margin;
+
+      lines.forEach(line => {
+        if (y + lineHeight > pageHeight - margin) {
+          doc.addPage();
+          y = margin;
+        }
+        doc.text(line, margin, y);
+        y += lineHeight;
+      });
+
+      return doc.output("blob");
+    }
+
+    // Image -> PDF using jsPDF
+    function createPdfFromImage(file) {
+      if (!jsPDF) throw new Error("jsPDF library not loaded.");
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = e => {
+          const img = new Image();
+          img.onload = () => {
+            const orientation = img.width > img.height ? "l" : "p";
+            const pdf = new jsPDF({ orientation, unit: "pt", format: "a4" });
+            const pageWidth = pdf.internal.pageSize.getWidth();
+            const pageHeight = pdf.internal.pageSize.getHeight();
+            const ratio = Math.min(pageWidth / img.width, pageHeight / img.height);
+            const w = img.width * ratio;
+            const h = img.height * ratio;
+            const x = (pageWidth - w) / 2;
+            const y = (pageHeight - h) / 2;
+            const imgType = file.type === "image/png" ? "PNG" : "JPEG";
+
+            pdf.addImage(img, imgType, x, y, w, h);
+            const blob = pdf.output("blob");
+            resolve(blob);
+          };
+          img.onerror = () => reject(new Error("Could not load image."));
+          img.src = e.target.result;
+        };
+        reader.onerror = () => reject(new Error("Could not read image file."));
+        reader.readAsDataURL(file);
+      });
+    }
+
+    // Text -> DOCX using docx.js
+    function createDocxFromText(text) {
+      if (!Document || !Packer || !Paragraph) {
+        throw new Error("docx library not loaded.");
+      }
+      return new Promise((resolve, reject) => {
+        try {
+          const lines = (text || "").split(/\r?\n/);
+          const paragraphs = lines.map(line => new Paragraph(line || ""));
+          const doc = new Document({
+            sections: [{ properties: {}, children: paragraphs }],
+          });
+          Packer.toBlob(doc)
+            .then(blob => resolve(blob))
+            .catch(reject);
+        } catch (e) {
+          reject(e);
+        }
+      });
+    }
+
+    // Convert single file according to type → returns { blob, filename, previewText, previewImageBlob }
+    async function convertSingleFile(file, type) {
+      let outBlob, outFileName, previewText = "", previewImageBlob = null;
+
+      if (type === "json_to_csv") {
+        const text = await file.text();
+        const csv = jsonToCsv(text);
+        previewText = csv.slice(0, 400);
+        outBlob = new Blob([csv], { type: "text/csv;charset=utf-8" });
+        outFileName = file.name.replace(/\.json$/i, "") + "_converted.csv";
+
+      } else if (type === "csv_to_json") {
+        const text = await file.text();
+        const json = csvToJson(text);
+        previewText = json.slice(0, 400);
+        outBlob = new Blob([json], { type: "application/json;charset=utf-8" });
+        outFileName = file.name.replace(/\.csv$/i, "") + "_converted.json";
+
+      } else if (type === "xlsx_to_csv") {
+        const csv = await convertXlsxToCsv(file);
+        previewText = csv.slice(0, 400);
+        outBlob = new Blob([csv], { type: "text/csv;charset=utf-8" });
+        outFileName = file.name.replace(/\.xlsx$/i, "") + "_converted.csv";
+
+      } else if (type === "docx_to_txt") {
+        const txt = await convertDocxToText(file);
+        previewText = txt.slice(0, 400);
+        outBlob = new Blob([txt], { type: "text/plain;charset=utf-8" });
+        outFileName = file.name.replace(/\.docx$/i, "") + "_converted.txt";
+
+      } else if (type === "docx_to_pdf") {
+        const txt = await convertDocxToText(file);
+        previewText = txt.slice(0, 400);
+        outBlob = createPdfFromText(txt);
+        outFileName = file.name.replace(/\.docx$/i, "") + "_converted.pdf";
+
+      } else if (type === "pdf_to_txt") {
+        const txt = await convertPdfToText(file);
+        previewText = txt.slice(0, 400);
+        outBlob = new Blob([txt], { type: "text/plain;charset=utf-8" });
+        outFileName = file.name.replace(/\.pdf$/i, "") + "_converted.txt";
+
+      } else if (type === "pdf_to_docx") {
+        const txt = await convertPdfToText(file);
+        previewText = txt.slice(0, 400);
+        outBlob = await createDocxFromText(txt);
+        outFileName = file.name.replace(/\.pdf$/i, "") + "_converted.docx";
+
+      } else if (type === "jpg_to_png") {
+        if (!/\.jpe?g$/i.test(file.name)) {
+          throw new Error("Please upload a JPG/JPEG file for this conversion.");
+        }
+        const blob = await convertImage(file, "png");
+        previewImageBlob = blob;
+        outBlob = blob;
+        outFileName = file.name.replace(/\.jpe?g$/i, "") + "_converted.png";
+
+      } else if (type === "png_to_jpg") {
+        if (!/\.png$/i.test(file.name)) {
+          throw new Error("Please upload a PNG file for this conversion.");
+        }
+        const blob = await convertImage(file, "jpg");
+        previewImageBlob = blob;
+        outBlob = blob;
+        outFileName = file.name.replace(/\.png$/i, "") + "_converted.jpg";
+
+      } else if (type === "img_to_pdf") {
+        if (!file.type.startsWith("image/")) {
+          throw new Error("Please upload an image (JPG/PNG) for this conversion.");
+        }
+        const pdfBlob = await createPdfFromImage(file);
+        outBlob = pdfBlob;
+        outFileName = file.name.replace(/\.(jpe?g|png)$/i, "") + "_converted.pdf";
+        previewText = "Image embedded into a PDF page.";
+      }
+
+      return { blob: outBlob, filename: outFileName, previewText, previewImageBlob };
+    }
+
+    convertForm.addEventListener("submit", async e => {
+      e.preventDefault();
+      clearFlash();
+
+      const files = Array.from(fileInput.files || []);
+      const type = convertTypeSelect.value;
+
+      if (!files.length) {
+        showFlash("Please choose at least one file first.");
+        return;
+      }
+
+      resetResult();
+
+      try {
+        const isMulti = files.length > 1;
+        const results = [];
+        const zip = isMulti ? new JSZip() : null;
+
+        for (const file of files) {
+          const res = await convertSingleFile(file, type);
+          results.push(res);
+          if (isMulti) {
+            zip.file(res.filename, res.blob);
+          }
+        }
+
+        if (isMulti) {
+          // Create ZIP
+          const zipBlob = await zip.generateAsync({ type: "blob" });
+          setDownload(zipBlob, `hp-convertx-${type}-batch.zip`);
+          const first = results[0];
+          resultImage.style.display = "none";
+          const firstName = files[0].name;
+          resultPreview.textContent =
+            `Converted ${files.length} files.\n` +
+            `Preview from: ${firstName}\n\n` +
+            (first.previewText || "(Binary result — open ZIP to view images / PDFs)");
+          showFlash("Batch mode: all converted files are packed into a single ZIP.");
+        } else {
+          // Single file behaviour
+          const r = results[0];
+          if (r.previewImageBlob) {
+            const url = URL.createObjectURL(r.previewImageBlob);
+            lastBlobUrl = url;
+            resultImage.src = url;
+            resultImage.style.display = "block";
+            resultPreview.style.display = "none";
+          } else {
+            resultImage.style.display = "none";
+            resultPreview.style.display = "block";
+            resultPreview.textContent =
+              r.previewText || "(Result ready. Download to view full content.)";
+          }
+          setDownload(r.blob, r.filename);
+        }
+      } catch (err) {
+        console.error(err);
+        showFlash("Conversion failed: " + err.message);
+        resultPreview.textContent = "(No result)";
+      }
+    });
+  </script>
+</body>
+</html>
